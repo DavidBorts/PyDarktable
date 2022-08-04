@@ -1,5 +1,7 @@
 # PyDarktable
 ##### _A Python Wrapper for Darktable's CLI_
+
+
 &nbsp;
 Use _PyDarktable_driver.py_ for a simlple means of interfacing with the code.
 
@@ -8,7 +10,7 @@ Command format:
 python PyDarktable_driver.py <image_input_path> <image_output_path> <instructions_path>
 ```
 
-### Intructions
+### Instructions
 
 Instructions for the driver are written in a _.txt_ file, with each instruction as a separate line.
 | Instruction | range |
