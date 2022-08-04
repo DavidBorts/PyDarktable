@@ -1,8 +1,8 @@
 # PyDarktable
-##### _A Python Wrapper for Darktable's CLI_
+### _A Python Wrapper for Darktable's CLI_
 
+<br/>
 
-&nbsp;
 Use _PyDarktable_driver.py_ for a simlple means of interfacing with the code.
 
 Command format:
@@ -18,6 +18,7 @@ Instructions for the driver are written in a _.txt_ file, with each instruction 
 | colorbalancergb (_contrast_) | [-0.9, 0.9]
 | sharpness | [0.0, 10.0] 
 | exposure | [-2.0, 4.0]
+
 An example:
 ```sh
 sharpness 5.0
@@ -26,4 +27,4 @@ colorbalancergb 0.17
 ...
 <param_name> <value>
 ```
-The order of the instructions does not matter
+The order of the instructions does not matter.
