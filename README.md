@@ -15,15 +15,17 @@ python PyDarktable_driver.py <image_input_path> <image_output_path> <instruction
 Instructions for the driver are written in a _.txt_ file, with each instruction as a separate line.
 | Instruction | range |
 | ------ | ------ |
-| colorbalancergb (_contrast_) | [-0.9, 0.9]
-| sharpness | [0.0, 10.0] 
-| exposure | [-2.0, 4.0]
+| colorbalancergb (_contrast_) | [-0.9, 0.9] |
+| sharpness | [0.0, 10.0] |
+| exposure | [-2.0, 4.0] |
+| hazeremoval | [-1.0, 1.0] |
 
 An example:
 ```sh
 sharpness 5.0
 exposure 2.37
 colorbalancergb 0.17
+hazeremoval 0.01
 ...
 <param_name> <value>
 ```

@@ -151,6 +151,16 @@ _FMT_STR = '''<?xml version="1.0" encoding="UTF-8"?>
       darktable:multi_priority="0"
       darktable:blendop_version="11"
       darktable:blendop_params="000000000400000018000000000000000000c84200000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000000000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f0000000000000000000000000000000000000000000000000000000000000000789ad4c0789ad4c00000000000000000789ad4c0789ad4c000000000000000000000000000000000000000000000000000000000000000000000000000000000"/>
+      <rdf:li
+      darktable:num="12"
+      darktable:operation="hazeremoval"
+      darktable:enabled="{enable_hazeremoval}"
+      darktable:modversion="1"
+      darktable:params="{hazeremoval_params}"
+      darktable:multi_name=""
+      darktable:multi_priority="0"
+      darktable:blendop_version="11"
+      darktable:blendop_params="000000000400000018000000000000000000c84200000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000000000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f00000000000000000000803f0000803f0000000000000000000000000000000000000000000000000000000000000000789ad4c0789ad4c00000000000000000789ad4c0789ad4c000000000000000000000000000000000000000000000000000000000000000000000000000000000"/>
     </rdf:Seq>
    </darktable:history>
   </rdf:Description>
@@ -342,6 +352,13 @@ class SharpenParams:
     def to_hex_string(self):
         return to_hex_string([getattr(self, fd.name) for fd in fields(self)])
 
+@dataclass
+class HazeRemovalParams:
+    strength: float = 0.2 # $MIN: -1.0 $MAX: 1.0 $DEFAULT: 0.2
+    distance: float = 0.2 # $MIN:  0.0 $MAX: 1.0 $DEFAULT: 0.2
+
+    def to_hex_string(self):
+        return to_hex_string([getattr(self, fd.name) for fd in fields(self)])
 
 @dataclass
 class TemperatureParams:
@@ -392,22 +409,30 @@ class functions:
         exposure_params = ExposureParams()
         exposure_params.exposure = float(value)
         return exposure_params
+    
+    @staticmethod
+    def hazeremoval(value):
+        hazeremoval_params = HazeRemovalParams()
+        hazeremoval_params.strength = float(value)
+        return hazeremoval_params
 
 # Pipeline order is as follows, * means it can be skipped and therefore has a bool param.
 # 0 rawprepare
 # 1 temperature      *
 # 2 highlights       *
 # 3 demosaic
-# 4 flip             *
-# 5 exposure         *
-# 6 colorin
-# 7 sharpen          *
-# 8 colorbalancergb  *
-# 9 filmicrgb        *
-# 10 colorout
+# 4 hazeremoval      *
+# 5 flip             *
+# 6 exposure         *
+# 7 colorin
+# 8 sharpen          *
+# 9 colorbalancergb  *
+# 10 filmicrgb       *
+# 11 colorout
 def get_pipe_xmp(raw_prepare_params=RawPrepareParams(),
                  temperature_params=TemperatureParams(),
                  highlights_params=HighlightsParams(),
+                 hazeremoval_params=HazeRemovalParams(),
                  exposure_params=ExposureParams(),
                  sharpen_params=SharpenParams(),
                  colorbalancergb_params=ColorBalanceRGBParams(),
@@ -427,6 +452,8 @@ def get_pipe_xmp(raw_prepare_params=RawPrepareParams(),
         temperature_params=to_hex(temperature_params, TemperatureParams()),
         enable_highlights=zineo(highlights_params),
         highlights_params=to_hex(highlights_params, HighlightsParams()),
+        enable_hazeremoval=zineo(hazeremoval_params),
+        hazeremoval_params=to_hex(hazeremoval_params, HazeRemovalParams()),
         enable_exposure=zineo(exposure_params),
         exposure_params=to_hex(exposure_params, ExposureParams()),
         enable_sharpen=zineo(sharpen_params),

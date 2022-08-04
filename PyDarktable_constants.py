@@ -17,3 +17,4 @@ class POSSIBLE_VALUES:
         self.sharpen = [(0.0, 10.0)]
         self.exposure = [(-2.0, 4.0)]
         self.highlights = [(0.05, 0.4)] # highlights clipping threshold
+        self.hazeremoval = [(-1.0, 1.0)]
