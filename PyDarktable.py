@@ -342,7 +342,6 @@ class HighlightsParams:
     def to_hex_string(self):
         return to_hex_string([getattr(self, fd.name) for fd in fields(self)])
 
-
 @dataclass
 class SharpenParams:
     radius: float = 8.0

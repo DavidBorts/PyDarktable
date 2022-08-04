@@ -3,7 +3,7 @@
 
 <br/>
 
-Use _PyDarktable_driver.py_ for a simlple means of interfacing with the code.
+Use _PyDarktable_driver.py_ as a simple means of interfacing with the code.
 
 Command format:
 ```sh
